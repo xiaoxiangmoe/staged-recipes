@@ -1,0 +1,43 @@
+{% set name = "svix-ksuid" %}
+{% set version = "0.6.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/svix-ksuid-{{ version }}.tar.gz
+  sha256: beb95bd6284bdbd526834e233846653d2bd26eb162b3233513d8f2c853c78964
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python {{ python_min }}
+    - pip
+    - setuptools
+  run:
+    - python >={{ python_min }}
+    - python-baseconv
+
+test:
+  imports:
+    - ksuid
+  commands:
+    - pip check
+  requires:
+    - python {{ python_min }}
+    - pip
+
+about:
+  home: https://github.com/svixhq/python-ksuid/
+  summary: A pure-Python KSUID implementation
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - xiaoxiangmoe
